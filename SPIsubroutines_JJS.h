@@ -46,13 +46,13 @@
 #define SPI_MODULE_CLOCK 48000000.0    //48MHz
 ////5,714,285 Hz or 1.4us period for neopixel period, this is without software delay
 //#define SPI_BIT_CLOCK 5714285.0    //5,714,285 Hz = 5.7MHz
-//#define SPI_BIT_CLOCK 5714285.0    //5,714,285 Hz = 5.7MHz
+#define SPI_BIT_CLOCK 5714285.0    //5,714,285 Hz = 5.7MHz
 
 //calibrated from software delay, the SPI period should be x+0.6=1.4us, x=1.4-0.6=0.8us
 //SPI frequency is therefore 1/0.8us=12,000,000Hz
 //logic 1 = 0.7us or 0b11111100
 //logic 0 = 0.35us high or 0b11100000
-#define SPI_BIT_CLOCK 12000000.0    //12,000,000 Hz = 12MHz
+//define SPI_BIT_CLOCK 12000000.0    //12,000,000 Hz = 12MHz
 
 //baud rate bit clock frequency = SPI module clock/USBRx value
 #define USBR_VALUE (float) SPI_MODULE_CLOCK/ (float) SPI_BIT_CLOCK

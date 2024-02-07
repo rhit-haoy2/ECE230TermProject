@@ -1,5 +1,5 @@
 //File Name: spi_ws2812.h
-#define NUM_LEDS    (20)    // NUMBER OF LEDS IN YOUR STRIP
+#define NUM_LEDS    (50)    // NUMBER OF LEDS IN YOUR STRIP
 
 // Useful typedefs
 typedef unsigned char u_char;	// 8 bit
@@ -14,6 +14,9 @@ typedef unsigned int u_int;     // 16 bit
 //at 0.8us SPI period for logic 1 of 0.7us and logic 0 of 0.35us
 #define HIGH_CODE   (0b11111110)      // 0.7us high and 0.1us low for Logic 1
 #define LOW_CODE    (0b11100000)      // 0.35us high and 1.05us low for Logic 0
+
+//#define HIGH_CODE   (0b11111100)      // 0.7us high and 0.1us low for Logic 1
+//#define LOW_CODE    (0b11000000)      // 0.35us high and 1.05us low for Logic 0
 
 // Configure processor to output to data strip
 void initStrip(void);

@@ -9,16 +9,7 @@
 #include "csLFXT.h"
 #include <stdio.h>
 
-enum pixel_t ex_game_board[10][5] = {{WALL, WALL, WALL, WALL, WALL}, \
-                                        {WALL, WALL, WALL, WALL, WALL}, \
-                                        {WALL, WALL, WALL, WALL, WALL}, \
-                                        {WALL, WALL, WALL, PATH, WALL}, \
-                                        {WALL, WALL, PATH, PATH, WALL}, \
-                                        {WALL, WALL, PATH, WALL, WALL}, \
-                                        {WALL, WALL, PATH, WALL, WALL}, \
-                                        {WALL, WALL, PATH, WALL, WALL}, \
-                                        {WALL, WALL, PATH, WALL, WALL}, \
-                                        {WALL, WALL, PATH, WALL, WALL} };
+
 
 /**
  * main.c
@@ -30,8 +21,33 @@ void main(void)
     configHFXT();
     configLFXT();
 
+    initGame();
+    printGame();
 
-    printGame(ex_game_board, 10, 5);
+    moveBallDown();
+    moveBallRight();
+
+
+    moveBallDown();
+    printGame();
+
+    moveBallDown();
+    printGame();
+
+    moveBallDown();
+    printGame();
+
+    moveBallLeft();
+    printGame();
+
+    moveBallLeft();
+    printGame();
+
+    moveBallLeft();
+    printGame();
+
+    moveBallLeft();
+    printGame();
 
     while (1){
 

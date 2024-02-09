@@ -10,6 +10,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#include "spi_ws2812.h"
+#include "SPIsubroutines_JJS.h"
 
 
 #define GAME_ROW 10
@@ -31,6 +33,8 @@ struct ball_pos_t ball_position;
 void initGame(void);
 
 void printGame(void);
+void renderGame(void);
+
 void moveBall(enum direction_t direction);
 void moveBallUp(void);
 void moveBallDown(void);

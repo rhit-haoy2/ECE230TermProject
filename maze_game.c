@@ -47,6 +47,32 @@ void printGame(void){
 
 }
 
+void renderGame(void){
+    int i,j;
+    u_int p = 0;
+
+    for (i = 0; i < GAME_ROW; i++){
+        for (j = 0; j < GAME_COL; j++){
+            p++;
+
+            if (i == ball_position.y && j == ball_position.x){
+                setLEDColor(p, 0xFF, 0x00, 0xFF);
+                }
+            else{
+                switch(game_board[i][j]){
+                case NULL_PIXEL: setLEDColor(p, 0x0, 0x00, 0x00);  break;
+                case WALL: setLEDColor(p, 0xFF, 0x00, 0x00);  break;
+                case PATH: setLEDColor(p, 0x00, 0xFF, 0x00);  break;
+                default: setLEDColor(p, 0x00, 0x00, 0x00);
+                }
+            }
+
+        }
+    }
+
+    showStrip();
+}
+
 void moveBall(enum direction_t direction){
     switch (direction){
     case STAY:

@@ -22,7 +22,11 @@ void main(void)
     configLFXT();
 
     initGame();
+    initStrip();
+
+
     printGame();
+    renderGame();
 
     moveBallDown();
     moveBallRight();
@@ -30,24 +34,31 @@ void main(void)
 
     moveBallDown();
     printGame();
+    renderGame();
 
     moveBallDown();
     printGame();
+    renderGame();
 
     moveBallDown();
     printGame();
+    renderGame();
 
     moveBallLeft();
     printGame();
+    renderGame();
 
     moveBallLeft();
     printGame();
+    renderGame();
 
     moveBallLeft();
     printGame();
+    renderGame();
 
     moveBallLeft();
     printGame();
+    renderGame();
 
     while (1){
 

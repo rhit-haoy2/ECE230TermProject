@@ -22,6 +22,7 @@ void main(void)
     configLFXT();
 
     initGame();
+    generateGame();
     initStrip();
 
 

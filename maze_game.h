@@ -17,8 +17,8 @@
 #define GAME_ROW 10
 #define GAME_COL 5
 
-enum pixel_t {NULL_PIXEL, WALL, PATH, BALL};
 
+enum pixel_t {NULL_PIXEL, WALL, PATH, BALL, START, END};
 enum pixel_t game_board[GAME_ROW][GAME_COL];
 
 enum direction_t {STAY, LEFT, RIGHT, UP, DOWN};
@@ -29,11 +29,14 @@ struct ball_pos_t{
 };
 
 struct ball_pos_t ball_position;
+struct ball_pos_t start_position;
+struct ball_pos_t end_position;
 
 void initGame(void);
 
 void printGame(void);
 void renderGame(void);
+void generateGame(void);
 
 void moveBall(enum direction_t direction);
 void moveBallUp(void);

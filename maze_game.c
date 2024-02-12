@@ -5,7 +5,14 @@ void initGame(void){
     ball_position.x = 0;
     ball_position.y = 0;
 
+    start_position.x = 0;
+    start_position.y = 7;
+
+    end_position.x = 3;
+    end_position.y = 4;
+
     int i,j;
+
     // Example game board for test
     for (i = 0; i < GAME_ROW; i++) {
         for (j = 0; j < GAME_COL; j++) {
@@ -17,6 +24,36 @@ void initGame(void){
         }
     }
 
+}
+
+void generateGame(void){
+    ball_position.x = 0;
+    ball_position.y = 0;
+
+    int i,j;
+    // Example game board for test
+    for (i = 0; i < GAME_ROW; i++) {
+        for (j = 0; j < GAME_COL; j++) {
+            if ((i == 3 && j == 3) || \
+                    (i == 3 && j == 4) || \
+                    (i == 5 && j == 3) || \
+                    (i == 6 && j == 3) || \
+                    (i == 7 && j == 3) || \
+                    (i == 7 && j == 2) || \
+                    (i == 7 && j == 1)) {
+                game_board[i][j] = PATH;
+            }
+            else if (i == start_position.y && j == start_position.x){
+                game_board[i][j] = START;
+            }
+            else if (i == end_position.y && j == end_position.x){
+                game_board[i][j] = END;
+            }
+            else {
+                game_board[i][j] = WALL;
+            }
+        }
+    }
 }
 
 void printGame(void){
@@ -36,6 +73,8 @@ void printGame(void){
                 case NULL_PIXEL: printf(" "); break;
                 case WALL: printf("="); break;
                 case PATH: printf("."); break;
+                case START: printf("S"); break;
+                case END: printf("E"); break;
                 default: printf(" ");
                 }
             }
@@ -53,19 +92,23 @@ void renderGame(void){
 
     for (i = 0; i < GAME_ROW; i++){
         for (j = 0; j < GAME_COL; j++){
-            p++;
+
 
             if (i == ball_position.y && j == ball_position.x){
-                setLEDColor(p, 0xFF, 0x00, 0xFF);
+                setLEDColor(p, 0x3F, 0x00, 0x3F);
                 }
             else{
                 switch(game_board[i][j]){
                 case NULL_PIXEL: setLEDColor(p, 0x0, 0x00, 0x00);  break;
-                case WALL: setLEDColor(p, 0xFF, 0x00, 0x00);  break;
-                case PATH: setLEDColor(p, 0x00, 0xFF, 0x00);  break;
+                case WALL: setLEDColor(p, 0x3F, 0x00, 0x00);  break;
+                case PATH: setLEDColor(p, 0x00, 0x3F, 0x00);  break;
+                case START: setLEDColor(p, 0x00, 0x00, 0x3F);  break;
+                case END: setLEDColor(p, 0x00, 0x00, 0x3F);  break;
                 default: setLEDColor(p, 0x00, 0x00, 0x00);
                 }
+
             }
+            p++;
 
         }
     }

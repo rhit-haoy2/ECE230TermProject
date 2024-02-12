@@ -165,3 +165,28 @@ void moveBallRight(void){
     moveBall(RIGHT);
 }
 
+enum collision_result_t collisionHandler(void){
+    enum collision_result_t result;
+
+    switch(game_board[ball_position.y][ball_position.y]){
+    case PATH:
+        result = ON_PATH;
+        break;
+    case WALL:
+        result = ON_WALL;
+        break;
+    case START:
+        result = ON_PATH;
+        break;
+    case END:
+        result = ON_END;
+        break;
+    default:
+        result = ON_PATH;
+        break;
+    }
+
+    return result;
+
+}
+

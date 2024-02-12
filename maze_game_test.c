@@ -18,6 +18,8 @@ void main(void)
 {
     WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;     // stop watchdog timer
 
+    enum collision_result_t collision;
+
     configHFXT();
     configLFXT();
 
@@ -44,6 +46,9 @@ void main(void)
     moveBallDown();
     printGame();
     renderGame();
+
+    collision = collisionHandler();
+    printf("/r/n Collision result: %d",collision);
 
     moveBallLeft();
     printGame();

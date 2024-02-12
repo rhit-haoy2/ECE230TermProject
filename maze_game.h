@@ -17,6 +17,7 @@
 #define GAME_ROW 10
 #define GAME_COL 5
 
+enum collision_result_t {ON_PATH, ON_WALL, ON_END};
 
 enum pixel_t {NULL_PIXEL, WALL, PATH, BALL, START, END};
 enum pixel_t game_board[GAME_ROW][GAME_COL];
@@ -44,7 +45,7 @@ void moveBallDown(void);
 void moveBallLeft(void);
 void moveBallRight(void);
 
-
+enum collision_result_t collisionHandler(void);
 
 
 #endif /* MAZE_GAME_H_ */

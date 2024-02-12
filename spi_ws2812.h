@@ -1,4 +1,8 @@
 //File Name: spi_ws2812.h
+
+#ifndef SPI_WS2812_H_
+#define SPI_WS2812_H_
+
 #define NUM_LEDS    (50)    // NUMBER OF LEDS IN YOUR STRIP
 
 // Useful typedefs
@@ -39,4 +43,4 @@ void gradualFill(u_int n, u_char r, u_char g, u_char b);
 #define UPDATE_INTERVAL 100000 //1,000,000 = ~0.5 second
 void delay_cycles(unsigned int count);
 
-
+#endif //SPI_WS2812_H_

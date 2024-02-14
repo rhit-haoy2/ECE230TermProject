@@ -17,6 +17,8 @@
 #define GAME_ROW 10
 #define GAME_COL 5
 
+#define TILT_THRESHOLD 20
+
 enum collision_result_t {ON_PATH, ON_WALL, ON_END};
 
 enum pixel_t {NULL_PIXEL, WALL, PATH, BALL, START, END};
@@ -46,6 +48,8 @@ void moveBallLeft(void);
 void moveBallRight(void);
 
 enum collision_result_t collisionHandler(void);
+
+void playStartEffect(void);
 
 
 #endif /* MAZE_GAME_H_ */

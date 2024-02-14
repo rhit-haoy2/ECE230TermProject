@@ -38,6 +38,8 @@ typedef struct {
 
 static LED leds[NUM_LEDS] = { { 0, 0, 0 } };
 
+
+
 // Initializes everything needed to use this library. This clears the strip.
 void initStrip() {
     ConfigureSPI_USCI_A1();
@@ -46,9 +48,9 @@ void initStrip() {
 
 // Sets the color of a certain LED (0 indexed)
 void setLEDColor(u_int p, u_char r, u_char g, u_char b) {
-	leds[p].green = g;
-    leds[p].red = r;
-    leds[p].blue = b;
+	leds[p].green = g/BIRGHTNESS_DEDUCTION;
+    leds[p].red = r/BIRGHTNESS_DEDUCTION;
+    leds[p].blue = b/BIRGHTNESS_DEDUCTION;
 }
 
 // Send colors to the strip and show them. Disables interrupts while processing.
@@ -116,4 +118,5 @@ void delay_cycles(unsigned int count) {
 unsigned int index;
     for(index=0; index<count; index++) { }
 }
+
 

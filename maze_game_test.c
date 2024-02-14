@@ -66,6 +66,7 @@ void main(void)
     printGame();
     renderGame();
 
+
     while (1){
 
     }

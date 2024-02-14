@@ -22,6 +22,8 @@ typedef unsigned int u_int;     // 16 bit
 //#define HIGH_CODE   (0b11111100)      // 0.7us high and 0.1us low for Logic 1
 //#define LOW_CODE    (0b11000000)      // 0.35us high and 1.05us low for Logic 0
 
+#define BIRGHTNESS_DEDUCTION 2
+
 // Configure processor to output to data strip
 void initStrip(void);
 

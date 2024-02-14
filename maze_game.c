@@ -190,3 +190,23 @@ enum collision_result_t collisionHandler(void){
 
 }
 
+void playStartEffect(void){
+    enum pixel_t board[GAME_ROW][GAME_COL];
+    u_int r,g,b;
+    r = 0x00;
+    g = 0x23;
+    b = 0x45;
+
+    while(1){
+        r++;
+        g--;
+        b++;
+
+        fillStrip(r/2,g/2,b/2);
+
+    }
+
+
+
+}
+

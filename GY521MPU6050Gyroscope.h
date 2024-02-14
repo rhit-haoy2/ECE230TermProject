@@ -10,8 +10,6 @@
 
 
 
-#endif /* GY521MPU6050GYROSCOPE_H_ */
-
 
 //File: GY521MPU6050Gyroscope.c
 //Jianjian Song
@@ -63,6 +61,15 @@
 
 uint8_t RXDataPointer, TXDataPointer;
 
+volatile int16_t accel_x, accel_y, accel_z;
+
+double accel_x_g, accel_y_g, accel_z_g, fullscale1g;
+
+
+
+float calculateRoll(float accel_x, float accel_y, float accel_z);
+float calculatePitch(float accel_x, float accel_y, float accel_z);
+
 void ConfigureGY521MPU6050(void);
 
 //write to an internal register at RegisterAddress to configure its value with RegisterValue
@@ -70,4 +77,4 @@ void ConfigureI2CDeviceRegister(char RegisterAddress, char RegisterValue);
 
 void StartAccelReading(void);
 
-
+#endif /* GY521MPU6050GYROSCOPE_H_ */

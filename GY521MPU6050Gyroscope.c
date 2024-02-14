@@ -36,10 +36,46 @@
 ******************************************************************************/
 #include <msp.h>
 #include <stdint.h>
+#include <math.h>
 #include "GY521MPU6050Gyroscope.h"
 
 
-volatile int16_t accel_x, accel_y, accel_z;
+
+
+/*
+ * Input: float accel_x, float accel_y, float accel_z
+ * The unit and scale of three-axis acceleration value doesn't matter, whether they
+ * are in g-scale or raw data from GY521, as long as the unit or scale of the three
+ * axis of acceleration are the same
+ *
+ * Output: float roll_angle
+ * The roll angle in unit of degrees
+ */
+float calculateRoll(float accel_x, float accel_y, float accel_z){
+    float roll_angle = atan2(accel_y, sqrt(accel_x*accel_x + accel_z*accel_z));
+
+    roll_angle = roll_angle * (180/M_PI);
+
+    return roll_angle;
+}
+
+
+/*
+ * Input: float accel_x, float accel_y, float accel_z
+ * The unit and scale of three-axis acceleration value doesn't matter, whether they
+ * are in g-scale or raw data from GY521, as long as the unit or scale of the three
+ * axis of acceleration are the same
+ *
+ * Output: float pitch_angle
+ * The pitch angle in unit of degrees
+ */
+float calculatePitch(float accel_x, float accel_y, float accel_z){
+    float pitch_angle = atan2(accel_x, sqrt(accel_y*accel_y + accel_z*accel_z));
+
+    pitch_angle = pitch_angle * (180/M_PI);
+
+    return pitch_angle;
+}
 
 void ConfigureGY521MPU6050(void) {
 

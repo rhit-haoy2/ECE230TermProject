@@ -38,16 +38,14 @@ void main(void)
 
     ConfigureGY521MPU6050();
 
-    fullscale1g =  (pow(2,14-gFullScale));
+
 
 
     while (1){
         StartAccelReading();
 
 
-        accel_x_g = ((float) accel_x) / fullscale1g;
-        accel_y_g = ((float) accel_y) / fullscale1g;
-        accel_z_g = ((float) accel_z) / fullscale1g;
+
 
         roll_angle = calculateRoll(accel_x_g, accel_y_g, accel_z_g);
         pitch_angle = calculatePitch(accel_x_g, accel_y_g, accel_z_g);

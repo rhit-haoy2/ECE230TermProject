@@ -40,6 +40,22 @@
 #include "GY521MPU6050Gyroscope.h"
 
 
+enum gFullScale_t gFullScale = g8;
+
+float calculateGAccelMagnitude(void){
+    float result = sqrt(accel_x_g*accel_x_g + accel_y_g*accel_y_g +accel_z_g*accel_z_g);
+
+    return result;
+}
+
+
+void calculateGAccel(void){
+    fullscale1g =  (pow(2,14-gFullScale));
+
+    accel_x_g = ((float) accel_x) / fullscale1g;
+    accel_y_g = ((float) accel_y) / fullscale1g;
+    accel_z_g = ((float) accel_z) / fullscale1g;
+}
 
 
 /*
@@ -51,8 +67,18 @@
  * Output: float roll_angle
  * The roll angle in unit of degrees
  */
-float calculateRoll(float accel_x, float accel_y, float accel_z){
-    float roll_angle = atan2(accel_y, sqrt(accel_x*accel_x + accel_z*accel_z));
+//float calculateRoll(float accel_x, float accel_y, float accel_z){
+//    float roll_angle = atan2(accel_y, sqrt(accel_x*accel_x + accel_z*accel_z));
+//
+//    roll_angle = roll_angle * (180/M_PI);
+//
+//    return roll_angle;
+//}
+
+float calculateRoll(void){
+
+
+    float roll_angle = atan2(accel_y_g, sqrt(accel_x_g*accel_x_g + accel_z_g*accel_z_g));
 
     roll_angle = roll_angle * (180/M_PI);
 
@@ -69,8 +95,9 @@ float calculateRoll(float accel_x, float accel_y, float accel_z){
  * Output: float pitch_angle
  * The pitch angle in unit of degrees
  */
-float calculatePitch(float accel_x, float accel_y, float accel_z){
-    float pitch_angle = atan2(accel_x, sqrt(accel_y*accel_y + accel_z*accel_z));
+float calculatePitch(void){
+
+    float pitch_angle = atan2(accel_x_g, sqrt(accel_y_g*accel_y_g + accel_z_g*accel_z_g));
 
     pitch_angle = pitch_angle * (180/M_PI);
 
@@ -147,6 +174,8 @@ void ConfigureGY521MPU6050(void) {
             EUSCI_A_IE_TXIE |               // Enable transmit interrupt
             EUSCI_B_IE_NACKIE;              // Enable NACK interrupt
 
+    ConfigureI2CDeviceRegister(ACCEL_CONFIG, AFS_SEL_VALUE);
+
     // Enable eUSCIB0 interrupt in NVIC module
     NVIC->ISER[0] = (1 << EUSCIB0_IRQn);
 
@@ -211,6 +240,8 @@ void StartAccelReading(void) {
         EUSCI_B0->CTLW0 |= EUSCI_B_CTLW0_TR;
         // send I2C start condition with address frame and W bit
         EUSCI_B0->CTLW0 |= EUSCI_B_CTLW0_TXSTT;
+
+        fullscale1g =  (pow(2,14-gFullScale));
 } //end StartAccelReading()
 
 // I2C interrupt service routine

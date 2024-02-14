@@ -190,21 +190,29 @@ enum collision_result_t collisionHandler(void){
 
 }
 
+static short r = 0x00;
+static short g = 0x23;
+static short b = 0x45;
+static u_int count = 0;
+
+
 void playStartEffect(void){
     enum pixel_t board[GAME_ROW][GAME_COL];
-    u_int r,g,b;
-    r = 0x00;
-    g = 0x23;
-    b = 0x45;
 
-    while(1){
-        r++;
-        g--;
-        b++;
-
-        fillStrip(r/2,g/2,b/2);
-
+    if (count < 60){
+        b--;
+        g++;
     }
+    else{
+        b++;
+        g--;
+    }
+
+    count++;
+    count = count % 120;
+
+    fillStrip(r,g/4,b/4);
+
 
 
 

@@ -17,7 +17,6 @@
 #define GAME_ROW 10
 #define GAME_COL 5
 
-#define TILT_THRESHOLD 20
 
 enum collision_result_t {ON_PATH, ON_WALL, ON_END};
 

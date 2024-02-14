@@ -87,7 +87,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="maze_game_test.c|ece230TermProjectmain.c|GameTick_test.c|GY521_test.c|neopixel_SPI_test.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="playable_maze_game_test.c|maze_game_test.c|GameTick_test.c|GY521_test.c|neopixel_SPI_test.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

@@ -59,16 +59,28 @@
 #define PWR_MGMT_ADDR           0x6B    // address of power management register
 #define ACCEL_CONFIG    0x1C
 
+
 uint8_t RXDataPointer, TXDataPointer;
 
 volatile int16_t accel_x, accel_y, accel_z;
 
-double accel_x_g, accel_y_g, accel_z_g, fullscale1g;
+volatile double accel_x_g, accel_y_g, accel_z_g;
+
+double fullscale1g;
+
+enum gFullScale_t {g2, g4, g8, g16};
+
+#define AFS_SEL_VALUE   gFullScale<<3
 
 
 
-float calculateRoll(float accel_x, float accel_y, float accel_z);
-float calculatePitch(float accel_x, float accel_y, float accel_z);
+
+
+//float calculateRoll(float accel_x, float accel_y, float accel_z);
+//float calculatePitch(float accel_x, float accel_y, float accel_z);
+
+float calculateRoll();
+float calculatePitch();
 
 void ConfigureGY521MPU6050(void);
 
@@ -76,5 +88,8 @@ void ConfigureGY521MPU6050(void);
 void ConfigureI2CDeviceRegister(char RegisterAddress, char RegisterValue);
 
 void StartAccelReading(void);
+
+void calculateGAccel(void);
+float calculateGAccelMagnitude(void);
 
 #endif /* GY521MPU6050GYROSCOPE_H_ */

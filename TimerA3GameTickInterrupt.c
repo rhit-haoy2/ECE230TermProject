@@ -1,8 +1,10 @@
 //File Name: TimerA3GameTickInterrupt.c
 // Generate interrupt for global game tick
 
+
 #include <msp.h>
 #include "TimerA3GameTickInterrupt.h"
+#include "ece230TermProject.h"
 
 #define CLK_FREQ 32000   //ACLK at 32kHz
 #define GAME_TICK_PERIOD 500 // In unit of ms, the interval between updates of game board
@@ -40,6 +42,8 @@ void TA3_0_IRQHandler(void)
     if(TIMER_A3->CCTL[0] & TIMER_A_CCTLN_CCIFG)
     {
         LED1port->OUT ^=LED1pin;
+
+        game_update_flag = true;
     // TODO clear timer compare flag in TA3CCTL0
         TIMER_A3->CCTL[0] &= ~TIMER_A_CCTLN_CCIFG;  //clear interrupt flag
     }

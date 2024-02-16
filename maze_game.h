@@ -49,6 +49,8 @@ void moveBallRight(void);
 enum collision_result_t collisionHandler(void);
 
 void playStartEffect(void);
+void playWinEffect(void);
+void playLoseEffect(void);
 
 
 #endif /* MAZE_GAME_H_ */

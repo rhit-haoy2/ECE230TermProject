@@ -10,6 +10,8 @@
 
 
 void initTimerA3GameTickInterrupt(void);
+void haltGameTickTimer(void);
+void restartGameTickTimer(void);
 
 
 

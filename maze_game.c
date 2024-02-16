@@ -2,14 +2,16 @@
 
 
 void initGame(void){
-    ball_position.x = 0;
-    ball_position.y = 0;
+
 
     start_position.x = 0;
     start_position.y = 7;
 
     end_position.x = 3;
     end_position.y = 4;
+
+    ball_position.x = start_position.x;
+    ball_position.y = start_position.y;
 
     int i,j;
 
@@ -27,8 +29,8 @@ void initGame(void){
 }
 
 void generateGame(void){
-    ball_position.x = 0;
-    ball_position.y = 0;
+    ball_position.x = start_position.x;
+    ball_position.y = start_position.y;
 
     int i,j;
     // Example game board for test
@@ -138,16 +140,17 @@ void moveBall(enum direction_t direction){
     if (ball_position.x < 0){
         ball_position.x =  GAME_COL + ball_position.x;
     }
-    else if (ball_position.x > GAME_COL){
+    else if (ball_position.x >= GAME_COL){
         ball_position.x = ball_position.x % GAME_COL;
     }
 
     if (ball_position.y < 0){
         ball_position.y = GAME_ROW + ball_position.y;
     }
-    else if (ball_position.y > GAME_ROW){
+    else if (ball_position.y >= GAME_ROW){
         ball_position.y = ball_position.y % GAME_COL;
     }
+
 }
 
 void moveBallUp(void){
@@ -168,7 +171,7 @@ void moveBallRight(void){
 enum collision_result_t collisionHandler(void){
     enum collision_result_t result;
 
-    switch(game_board[ball_position.y][ball_position.y]){
+    switch(game_board[ball_position.y][ball_position.x]){
     case PATH:
         result = ON_PATH;
         break;
@@ -190,7 +193,7 @@ enum collision_result_t collisionHandler(void){
 
 }
 
-static short r = 0x00;
+static short r = 0x05;
 static short g = 0x23;
 static short b = 0x45;
 static u_int count = 0;
@@ -213,8 +216,15 @@ void playStartEffect(void){
 
     fillStrip(r,g/4,b/4);
 
+}
 
+void playWinEffect(void){
+    gradualFill(GAME_COL*GAME_ROW, 0x00,0x23,0x23);
 
+}
+
+void playLoseEffect(void){
+    gradualFill(GAME_COL*GAME_ROW, 0x55,0x10,0x00);
 
 }
 

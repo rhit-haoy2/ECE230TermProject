@@ -1,124 +1,151 @@
-
 #include "ece230TermProject.h"
-
 
 enum game_status_t global_game_status;
 
 bool game_update_flag = false;
+int i;
 
 /**
  * main.c
  */
 void main(void)
 {
-	WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;		// stop watchdog timer
+    WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;		// stop watchdog timer
 
-	enum game_status_t global_game_status = GAME_START;
+    enum game_status_t global_game_status = GAME_START;
 
-	enum collision_result_t collision;
+    enum collision_result_t collision;
 
-	    float roll_angle, pitch_angle;
+    float roll_angle, pitch_angle;
 
 //	    enum
 //	    {
 //	        g2, g4, g8, g16
 //	    } gFullScale = g8;  //2g, 4g, 8g and 16g mapped t0 0, 1,2,3
 
-	    configHFXT();
-	    configLFXT();
+    configHFXT();
+    configLFXT();
 
-	    initGame();
-	    generateGame();
-	    initStrip();
+    initGame();
+    generateGame();
+    initStrip();
 
-	    initTimerA3GameTickInterrupt();
+    initTimerA3GameTickInterrupt();
 
-	    ConfigureGY521MPU6050();
+    ConfigureGY521MPU6050();
 
+    while (1)
+    {
+        switch (global_game_status)
+        {
+        case GAME_START:
+            // Do something ...
+            haltGameTickTimer();
 
+            StartAccelReading();
+            calculateGAccel();
 
+            printf("\r\n  Accel Meg = %.4lf", calculateGAccelMagnitude());
 
+            if (calculateGAccelMagnitude() > GAME_START_ACCEL_THRESHOLD)
+            {
+                global_game_status = GAME_PLAYING;
+                restartGameTickTimer();
+            }
+            else
+            {
+                playStartEffect();
+            }
 
-	while (1){
-	        switch (global_game_status){
-	        case GAME_START:
-	            // Do something ...
+            break;
+        case GAME_PLAYING:
+            // Do something ...
 
-	            StartAccelReading();
-//	            accel_x_g = ((float) accel_x) / fullscale1g;
-//                accel_y_g = ((float) accel_y) / fullscale1g;
-//                accel_z_g = ((float) accel_z) / fullscale1g;
-	            calculateGAccel();
+            while (!game_update_flag)
+                ;
 
+            StartAccelReading();
 
-	            printf("\r\n  Accel Meg = %.4lf", calculateGAccelMagnitude());
+            calculateGAccel();
 
-	            if (calculateGAccelMagnitude() > 1.5){
-	                global_game_status = GAME_PLAYING;
-	            }
-	            else{
-	                playStartEffect();
-	            }
+            if (calculateGAccelMagnitude() > GAME_START_ACCEL_THRESHOLD)
+            {
+                break;
+            }
+            roll_angle = calculateRoll();
+            pitch_angle = calculatePitch();
 
+            printf("\r\n  roll = %.4lf", roll_angle);
+            printf("  pitch = %.4lf", pitch_angle);
 
+            if (roll_angle > -90 && roll_angle < -1 * TILT_THRESHOLD)
+            {
+                moveBallLeft();
+            }
+            else if (roll_angle > TILT_THRESHOLD && roll_angle < 90)
+            {
+                moveBallRight();
+            }
 
+            if (pitch_angle > -90 && pitch_angle < -1 * TILT_THRESHOLD)
+            {
+                moveBallUp();
+            }
+            else if (pitch_angle > TILT_THRESHOLD && pitch_angle < 90)
+            {
+                moveBallDown();
+            }
 
-	            break;
-	        case GAME_PLAYING:
-	            // Do something ...
+            printGame();
+            renderGame();
+            game_update_flag = false;
 
-	            while (! game_update_flag);
+            collision = collisionHandler();
 
-	            StartAccelReading();
+            switch (collision)
+            {
+            case ON_END:
+                global_game_status = GAME_WIN;
+                break;
+            case ON_WALL:
+                global_game_status = GAME_LOSE;
+                break;
+            default:
+                global_game_status = GAME_PLAYING;
+                break;
+            }
 
+            break;
+        case GAME_WIN:
+            // Do something ...
+            restartGameTickTimer();
+            haltGameTickTimer();
 
-//                accel_x_g = ((float) accel_x) / fullscale1g;
-//                accel_y_g = ((float) accel_y) / fullscale1g;
-//                accel_z_g = ((float) accel_z) / fullscale1g;
+            generateGame();
 
-//                roll_angle = calculateRoll(accel_x_g, accel_y_g, accel_z_g);
-//                pitch_angle = calculatePitch(accel_x_g, accel_y_g, accel_z_g);
+            clearStrip();
+            playWinEffect();
 
+            global_game_status = GAME_START;
 
-	            calculateGAccel();
+            break;
 
-	            if (calculateGAccelMagnitude() > ACCEL_THRESHOLD){
-	                break;
-	            }
-                roll_angle = calculateRoll();
-                pitch_angle = calculatePitch();
+        case GAME_LOSE:
+            // Do something ...
+            restartGameTickTimer();
+            haltGameTickTimer();
 
-                printf ("\r\n  roll = %.4lf", roll_angle);
-                printf ("  pitch = %.4lf", pitch_angle);
+            generateGame();
 
-                if (roll_angle > -90 && roll_angle < -1*TILT_THRESHOLD){
-                    moveBallLeft();
-                }
-                else if (roll_angle > TILT_THRESHOLD && roll_angle < 90){
-                    moveBallRight();
-                }
+            clearStrip();
+            playLoseEffect();
 
-                if (pitch_angle > -90 && pitch_angle < -1*TILT_THRESHOLD){
-                    moveBallUp();
-                }
-                else if (pitch_angle > TILT_THRESHOLD && pitch_angle < 90){
-                    moveBallDown();
-                }
+            global_game_status = GAME_START;
+            break;
 
-                //printGame();
-                renderGame();
-                game_update_flag = false;
-
-	            break;
-	        case GAME_WIN:
-	            // Do something ...
-	            break;
-	        case GAME_LOSE:
-	            // Do something ...
-	            break;
-	        default:
-	            // Do something ...
-	            break;
-	        }
-	    }
+        default:
+            // Do something ...
+            break;
+        }
+    }
 }

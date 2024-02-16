@@ -34,6 +34,15 @@ void initTimerA3GameTickInterrupt(void) {
          NVIC->ISER[0] |= (1)<<TA3_0_IRQn;
 }
 
+void haltGameTickTimer(void){
+    TIMER_A3->CTL &= ~(BIT4 | BIT5); // Timer A3 in stop mode
+}
+
+void restartGameTickTimer(void){
+    TIMER_A3->CTL |= (BIT4 ); // Timer A3 in up mode
+    TIMER_A3->R = 0x00; // Clear timer A3
+
+}
 // Timer A3 CCR0 interrupt service routine
 void TA3_0_IRQHandler(void)
 {

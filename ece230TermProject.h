@@ -18,6 +18,7 @@
 
 #define TILT_THRESHOLD 20 // Threshold of tilting angle, in unit of degrees
 #define ACCEL_THRESHOLD 2.3 //Threshold of magnitude of sudden acceleration, in unit of g
+#define GAME_START_ACCEL_THRESHOLD 2.5
 
 
 enum game_status_t {GAME_START, GAME_PLAYING, GAME_WIN, GAME_LOSE};
